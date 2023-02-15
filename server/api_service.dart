@@ -7,7 +7,9 @@ class ApiService {
   final String baseUrl = "https://webtoon-crawler.nomadcoders.workers.dev";
   final String today = 'today';
 
-  void getTodayWebtoon() async {
+// http.get은 Future타잎을 반환한다 이는 당장 완료될수 있는 작업이 아니다라는걸 뜻함 = > 비동기 반환값
+  Future<List<WebtoonDataBinding>> getTodayWebtoon() async {
+    List<WebtoonDataBinding> webtoonInstances = [];
     // data 불러오기 Uri.parse이용
     final url = Uri.parse('$baseUrl/$today');
     final response = await http.get(url);
@@ -19,10 +21,11 @@ class ApiService {
       // 각각의 클래스하나의 요소로 만들어주고 json화 시켜줌
       for (var webtoon in webtoons) {
         // data를 dart에서 사용할수 있는 형식으로 바꿔주는 개념
-        final toons = WebtoonDataBinding.fromJson(webtoon);
-        print(toons.title);
+        // webtoonInstances에 json화 시킨 데이터를 넣어준다
+        final instance = WebtoonDataBinding.fromJson(webtoon);
+        webtoonInstances.add(instance);
       }
-      return;
+      return webtoonInstances;
     }
     throw Error();
   }
