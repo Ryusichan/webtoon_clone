@@ -2,51 +2,42 @@ import 'package:flutter/material.dart';
 import 'package:webappdemo/models/webtoon.dart';
 import 'package:webappdemo/server/api_service.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+// state를 사용하지않고 fluter 위젯으로 대체하기
+class HomeScreen extends StatelessWidget {
+  HomeScreen({super.key});
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  List<WebtoonDataBinding> webtoon = [];
-  bool isLoading = true;
-
-  void waitforWebtoon() async {
-    webtoon = await ApiService.getTodayWebtoon();
-    isLoading = false;
-    // 화면을 새로고침하기 위해서 setstate사용
-    setState(() {});
-  }
-
-// initstate에 데이터를 받아오는 함수를 호출
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    waitforWebtoon();
-  }
+  // state를 사용하지 않고 future로 값을 받아오기;
+  Future<List<WebtoonDataBinding>> webtoons = ApiService.getTodayWebtoon();
 
   @override
   Widget build(BuildContext context) {
-    print(webtoon);
-    print(isLoading);
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        centerTitle: true,
-        elevation: 2,
-        title: const Text(
-          '아파트지금',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
         backgroundColor: Colors.white,
-        foregroundColor: Colors.blue,
-      ),
-    );
+        appBar: AppBar(
+          centerTitle: true,
+          elevation: 2,
+          title: const Text(
+            '아파트지금',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.blue,
+        ),
+        // 위젯으로 state, setstate등을 사용하지 않고 화면의 변화를 줄수 있다
+        body: FutureBuilder(
+          // await를 쓸필요가 없다 자동적으로 Futurebuilder에서 처리해주기 때문이다
+          future: webtoons,
+          // snapshot은 Future의 상태
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return const Text('there is data');
+            } else {
+              return const Text('Loading...');
+            }
+          },
+        ));
   }
 }
