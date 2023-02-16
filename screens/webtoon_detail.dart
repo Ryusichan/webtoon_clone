@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class WebtoonDetail extends StatelessWidget {
-  final thumb, title, id;
+  final String thumb, title, id;
   const WebtoonDetail(
       {super.key, required this.thumb, required this.title, required this.id});
 

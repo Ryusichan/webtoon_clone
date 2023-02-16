@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:webappdemo/screens/webtoon_detail.dart';
 
 class Webtoon extends StatelessWidget {
-  final thumb, title, id;
+  final String thumb, title, id;
   const Webtoon(
       {super.key, required this.thumb, required this.title, required this.id});
 
@@ -15,7 +15,8 @@ class Webtoon extends StatelessWidget {
         // MaterialPageRoute이 슬라이드가 적용안되서 PageRouteBuilder를 이용한 좌우 슬라이드 추가
         PageRouteBuilder(
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            var begin = const Offset(1.0, 0.0);
+            // offset 방향에따라 수직, 수평의 변경이 가능하다
+            var begin = const Offset(0.0, 1.0);
             var end = Offset.zero;
             var curve = Curves.ease;
             var tween =
@@ -27,6 +28,8 @@ class Webtoon extends StatelessWidget {
           },
           pageBuilder: (context, anmation, secondaryAnimation) =>
               WebtoonDetail(id: id, title: title, thumb: thumb),
+          // dialog속성을 추가하는 방법 자동으로 appbar가 닫기로 바뀐다
+          fullscreenDialog: true,
         ),
       ),
       child: Column(
