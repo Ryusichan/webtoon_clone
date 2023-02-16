@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:webappdemo/models/webtoon.dart';
 import 'package:webappdemo/server/api_service.dart';
+import 'package:webappdemo/widgets/webtoon.dart';
 
 // state를 사용하지않고 fluter 위젯으로 대체하기
 class HomeScreen extends StatelessWidget {
@@ -61,25 +62,8 @@ class HomeScreen extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       itemBuilder: (context, index) {
         var webtoon = snapshot.data![index];
-        return Column(
-          children: [
-            Container(
-              width: 250,
-              clipBehavior: Clip.hardEdge,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 15,
-                      offset: const Offset(10, 10),
-                      color: Colors.grey.withOpacity(0.3),
-                    )
-                  ]),
-              child: Image.network(webtoon.thumb),
-            ),
-            Text(webtoon.title)
-          ],
-        );
+        return Webtoon(
+            thumb: webtoon.thumb, title: webtoon.title, id: webtoon.id);
       },
       separatorBuilder: (context, index) => const SizedBox(
         width: 40,
