@@ -29,24 +29,27 @@ class Webtoon extends StatelessWidget {
           pageBuilder: (context, anmation, secondaryAnimation) =>
               WebtoonDetail(id: id, title: title, thumb: thumb),
           // dialog속성을 추가하는 방법 자동으로 appbar가 닫기로 바뀐다
-          fullscreenDialog: true,
+          // fullscreenDialog: true,
         ),
       ),
       child: Column(
         children: [
-          Container(
-            width: 250,
-            clipBehavior: Clip.hardEdge,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                boxShadow: [
-                  BoxShadow(
-                    blurRadius: 15,
-                    offset: const Offset(10, 10),
-                    color: Colors.grey.withOpacity(0.3),
-                  )
-                ]),
-            child: Image.network(thumb),
+          Hero(
+            tag: id,
+            child: Container(
+              width: 250,
+              clipBehavior: Clip.hardEdge,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 15,
+                      offset: const Offset(10, 10),
+                      color: Colors.grey.withOpacity(0.3),
+                    )
+                  ]),
+              child: Image.network(thumb),
+            ),
           ),
           Text(title)
         ],
