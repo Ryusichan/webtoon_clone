@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:webappdemo/models/webtoon-detail.dart';
-import 'package:webappdemo/models/webtoon.dart';
+import 'package:webappdemo/models/webtoonDetail_model.dart';
+import 'package:webappdemo/models/webtoon_model.dart';
 
 class ApiService {
   static const String baseUrl =
@@ -33,14 +33,14 @@ class ApiService {
     throw Error();
   }
 
-  static Future<WebtoonDataDetailBinding> getDetailWebtoon(String id) async {
+  static Future<WebtoonDetailModel> getDetailWebtoon(String id) async {
     final url = Uri.parse('$baseUrl/$id');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
       final webtoon = jsonDecode(response.body);
 
-      return WebtoonDataDetailBinding.fromJson(webtoon);
+      return WebtoonDetailModel.fromJson(webtoon);
     }
     throw Error();
   }
