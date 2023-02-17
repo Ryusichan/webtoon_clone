@@ -1,12 +1,14 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:webappdemo/models/webtoon-detail.dart';
 import 'package:webappdemo/models/webtoon.dart';
 
 class ApiService {
   static const String baseUrl =
       "https://webtoon-crawler.nomadcoders.workers.dev";
   static const String today = 'today';
+  static const String id = 'id';
 
 // http.get은 Future타잎을 반환한다 이는 당장 완료될수 있는 작업이 아니다라는걸 뜻함 = > 비동기 반환값
   static Future<List<WebtoonDataBinding>> getTodayWebtoon() async {
@@ -27,6 +29,18 @@ class ApiService {
         webtoonInstances.add(instance);
       }
       return webtoonInstances;
+    }
+    throw Error();
+  }
+
+  static Future<WebtoonDataDetailBinding> getDetailWebtoon(String id) async {
+    final url = Uri.parse('$baseUrl/$id');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final webtoon = jsonDecode(response.body);
+
+      return WebtoonDataDetailBinding.fromJson(webtoon);
     }
     throw Error();
   }
