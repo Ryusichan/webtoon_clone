@@ -101,7 +101,26 @@ class _WebtoonDetailState extends State<WebtoonDetail> {
               }
               return const Text('...');
             },
-          )
+          ),
+          FutureBuilder(
+              future: episodes,
+              builder: ((context, snapshot) {
+                if (snapshot.hasData) {
+                  return Expanded(
+                      child: ListView.separated(
+                    itemBuilder: (context, index) {
+                      var episodes = snapshot.data![index].title;
+                      return Text(episodes);
+                    },
+                    separatorBuilder: (context, index) => const SizedBox(
+                      height: 10,
+                    ),
+                    itemCount: snapshot.data!.length,
+                  ));
+                } else {
+                  return const CircularProgressIndicator();
+                }
+              }))
         ],
       ),
     );
