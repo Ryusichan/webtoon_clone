@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:webappdemo/models/webtoonDetail_model.dart';
-import 'package:webappdemo/models/webtoonEposode_model.dart';
+import 'package:webappdemo/models/webtoonEpisode_model.dart';
 import 'package:webappdemo/models/webtoon_model.dart';
 
 class ApiService {
@@ -46,8 +46,8 @@ class ApiService {
     throw Error();
   }
 
-  static Future<List<WebtoonEposodeModel>> getEpisodeWebtoon(String id) async {
-    List<WebtoonEposodeModel> webtoonInstances = [];
+  static Future<List<WebtoonEpisodeModel>> getEpisodeWebtoon(String id) async {
+    List<WebtoonEpisodeModel> episodeInstances = [];
     // data 불러오기 Uri.parse이용
     final url = Uri.parse('$baseUrl/$id/episodes');
     final response = await http.get(url);
@@ -55,15 +55,15 @@ class ApiService {
     // statuscode가 200이면 요청에 성공
     if (response.statusCode == 200) {
       // json으로 변환해준다 string 값을 넘겨주면됨
-      final List<dynamic> webtoons = jsonDecode(response.body);
+      final List<dynamic> episodes = jsonDecode(response.body);
       // 각각의 클래스하나의 요소로 만들어주고 json화 시켜줌
-      for (var webtoon in webtoons) {
+      for (var webtoon in episodes) {
         // data를 dart에서 사용할수 있는 형식으로 바꿔주는 개념
         // webtoonInstances에 json화 시킨 데이터를 넣어준다
-        final instance = WebtoonEposodeModel.fromJson(webtoon);
-        webtoonInstances.add(instance);
+        final instance = WebtoonEpisodeModel.fromJson(webtoon);
+        episodeInstances.add(instance);
       }
-      return webtoonInstances;
+      return episodeInstances;
     }
     throw Error();
   }

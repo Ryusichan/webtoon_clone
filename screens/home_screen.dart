@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:webappdemo/models/webtoon.dart';
+import 'package:webappdemo/models/webtoon_model.dart';
 import 'package:webappdemo/server/api_service.dart';
 import 'package:webappdemo/widgets/webtoon.dart';
 
@@ -8,8 +8,7 @@ class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
   // state를 사용하지 않고 future로 값을 받아오기;
-  final Future<List<WebtoonDataBinding>> webtoons =
-      ApiService.getTodayWebtoon();
+  final Future<List<WebtoonDataModel>> webtoons = ApiService.getTodayWebtoon();
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +54,7 @@ class HomeScreen extends StatelessWidget {
         ));
   }
 
-  ListView makeList(AsyncSnapshot<List<WebtoonDataBinding>> snapshot) {
+  ListView makeList(AsyncSnapshot<List<WebtoonDataModel>> snapshot) {
     return ListView.separated(
       scrollDirection: Axis.horizontal,
       itemCount: snapshot.data!.length,
