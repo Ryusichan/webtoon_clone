@@ -46,48 +46,48 @@ class _WebtoonDetailState extends State<WebtoonDetail> {
         backgroundColor: Colors.white,
         foregroundColor: Colors.blue,
       ),
-      body: Column(
-        children: [
-          const SizedBox(
-            height: 50,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Hero(
-                // widget은 WebtoonDetail를 의미한다 많은 staful방식으로 변경되었기때문에 widget을통해 접근이 가능하다
-                tag: widget.id,
-                child: Container(
-                  width: 250,
-                  clipBehavior: Clip.hardEdge,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 15,
-                          offset: const Offset(10, 10),
-                          color: Colors.grey.withOpacity(0.3),
-                        )
-                      ]),
-                  child: Image.network(widget.thumb),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 40),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Hero(
+                  // widget은 WebtoonDetail를 의미한다 많은 staful방식으로 변경되었기때문에 widget을통해 접근이 가능하다
+                  tag: widget.id,
+                  child: Container(
+                    width: 250,
+                    clipBehavior: Clip.hardEdge,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 15,
+                            offset: const Offset(10, 10),
+                            color: Colors.grey.withOpacity(0.3),
+                          )
+                        ]),
+                    child: Image.network(widget.thumb),
+                  ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          Text(
-            widget.title,
-            style: const TextStyle(
-                fontSize: 20, color: Colors.blue, fontWeight: FontWeight.w600),
-          ),
-          const SizedBox(height: 20),
-          FutureBuilder(
-            future: webtoon,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 40),
-                  child: Column(
+              ],
+            ),
+            const SizedBox(height: 10),
+            Text(
+              widget.title,
+              style: const TextStyle(
+                  fontSize: 20, color: Colors.blue, fontWeight: FontWeight.w600),
+            ),
+            const SizedBox(height: 10),
+            FutureBuilder(
+              future: webtoon,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Column(
                     children: [
                       Text(
                         snapshot.data!.about,
@@ -96,32 +96,32 @@ class _WebtoonDetailState extends State<WebtoonDetail> {
                       const SizedBox(height: 10),
                       Text('${snapshot.data!.genre} / ${snapshot.data!.age}')
                     ],
-                  ),
-                );
-              }
-              return const Text('...');
-            },
-          ),
-          FutureBuilder(
-              future: episodes,
-              builder: ((context, snapshot) {
-                if (snapshot.hasData) {
-                  return Expanded(
-                      child: ListView.separated(
-                    itemBuilder: (context, index) {
-                      var episodes = snapshot.data![index].title;
-                      return Text(episodes);
-                    },
-                    separatorBuilder: (context, index) => const SizedBox(
-                      height: 10,
-                    ),
-                    itemCount: snapshot.data!.length,
-                  ));
-                } else {
-                  return const CircularProgressIndicator();
+                  );
                 }
-              }))
-        ],
+                return const Text('...');
+              },
+            ),
+            FutureBuilder(
+                future: episodes,
+                builder: ((context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Expanded(
+                        child: ListView.separated(
+                      itemBuilder: (context, index) {
+                        var episodes = snapshot.data![index].title;
+                        return Text(episodes);
+                      },
+                      separatorBuilder: (context, index) => const SizedBox(
+                        height: 10,
+                      ),
+                      itemCount: snapshot.data!.length,
+                    ));
+                  } else {
+                    return const CircularProgressIndicator();
+                  }
+                }))
+          ],
+        ),
       ),
     );
   }
