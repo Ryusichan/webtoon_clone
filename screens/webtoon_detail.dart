@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:webappdemo/models/webtoonDetail_model.dart';
 import 'package:webappdemo/models/webtoonEpisode_model.dart';
 import 'package:webappdemo/server/api_service.dart';
+import 'package:webappdemo/widgets/episode_widget.dart';
 
 class WebtoonDetail extends StatefulWidget {
   final String thumb, title, id;
@@ -109,7 +110,7 @@ class _WebtoonDetailState extends State<WebtoonDetail> {
                         child: ListView.separated(
                       itemBuilder: (context, index) {
                         var episodes = snapshot.data![index].title;
-                        return Text(episodes);
+                        return Episode(episodes: episodes);
                       },
                       separatorBuilder: (context, index) => const SizedBox(
                         height: 10,
