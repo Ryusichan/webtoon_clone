@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:webappdemo/models/webtoonDetail_model.dart';
-import 'package:webappdemo/models/webtoonEpisode_model.dart';
+import 'package:webappdemo/models/webtoondetail_model.dart';
+import 'package:webappdemo/models/webtoonepisode_model.dart';
 import 'package:webappdemo/models/webtoon_model.dart';
 
 class ApiService {

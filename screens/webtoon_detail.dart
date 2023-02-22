@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:webappdemo/models/webtoonDetail_model.dart';
-import 'package:webappdemo/models/webtoonEpisode_model.dart';
+import 'package:webappdemo/models/webtoondetail_model.dart';
+import 'package:webappdemo/models/webtoonepisode_model.dart';
 import 'package:webappdemo/server/api_service.dart';
 import 'package:webappdemo/widgets/episode_widget.dart';
 
@@ -81,7 +81,9 @@ class _WebtoonDetailState extends State<WebtoonDetail> {
             Text(
               widget.title,
               style: const TextStyle(
-                  fontSize: 20, color: Colors.blue, fontWeight: FontWeight.w600),
+                  fontSize: 20,
+                  color: Colors.blue,
+                  fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 10),
             FutureBuilder(
@@ -109,11 +111,14 @@ class _WebtoonDetailState extends State<WebtoonDetail> {
                     return Expanded(
                         child: ListView.separated(
                       itemBuilder: (context, index) {
-                        var episodes = snapshot.data![index].title;
-                        return Episode(episodes: episodes);
+                        var episodes = snapshot.data![index];
+                        return Episode(
+                          episodes: episodes,
+                          webtoonID: widget.id,
+                        );
                       },
                       separatorBuilder: (context, index) => const SizedBox(
-                        height: 10,
+                        height: 5,
                       ),
                       itemCount: snapshot.data!.length,
                     ));
